@@ -1,0 +1,22 @@
+.nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: #fff; position: sticky; top: 0; z-index: 5; border-bottom: 1px solid var(--borde); }
+.logo { font-size: 1.3rem; color: var(--verde-osc); } .logo span { color: var(--dorado); }
+.nav nav { display: flex; gap: 1.2rem; align-items: center; } .nav .btn { padding: .5rem 1rem; color: #fff; }
+.hero { text-align: center; padding: 5rem 5%; background: linear-gradient(135deg, var(--menta), #fff); }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); color: var(--verde-osc); max-width: 800px; margin: 0 auto 1rem; }
+.hero p { max-width: 620px; margin: 0 auto 2rem; color: var(--suave); font-size: 1.15rem; }
+.hero .btn { margin: .3rem; }
+.seccion { padding: 4rem 5%; text-align: center; } .seccion.alt { background: #fff; }
+.seccion h2 { color: var(--verde-osc); font-size: 1.9rem; margin: 0 0 2rem; }
+.pasos, .metricas, .planes { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1000px; margin: 0 auto; }
+.paso, .metrica, .plan { background: #fff; border: 1px solid var(--borde); border-radius: 16px; padding: 1.5rem; }
+.alt .metrica { background: var(--fondo); }
+.num { width: 44px; height: 44px; border-radius: 50%; background: var(--verde); color: #fff; font-weight: 700; display: grid; place-items: center; margin: 0 auto .8rem; }
+.valor { font-size: 2.4rem; font-weight: 800; color: var(--dorado); }
+.paso h3, .metrica h3, .plan h3 { margin: .3rem 0; } .paso p, .metrica p { color: var(--suave); margin: 0; }
+.sub { margin-top: 3rem; color: var(--verde-osc); }
+.grafica { width: min(560px, 100%); background: var(--fondo); border-radius: 12px; padding: .5rem; }
+.leyenda { color: var(--suave); } .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; } .dot.v { background: var(--verde); } .dot.d { background: var(--dorado); }
+.plan { text-align: left; display: flex; flex-direction: column; gap: .6rem; } .plan.dest { border: 2px solid var(--verde); transform: scale(1.03); }
+.precio { font-size: 1.4rem; font-weight: 700; color: var(--verde); } .plan ul { padding-left: 1.1rem; flex: 1; margin: 0; } .plan li { margin: .4rem 0; }
+footer { text-align: center; padding: 2rem; color: var(--suave); border-top: 1px solid var(--borde); }
+@media (max-width: 600px) { .nav nav a:not(.btn) { display: none; } }
