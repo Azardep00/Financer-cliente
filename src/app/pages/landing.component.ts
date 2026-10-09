@@ -20,7 +20,7 @@ import { FASES, INDICADORES, PLANES } from '../core/contenido';
   </section>
 
   <section class="video-banda" aria-label="Video: tus finanzas suben y bajan, con un plan tú decides hacia dónde">
-    <video #vid src="/banner.mp4" poster="/banner-poster.jpg" [muted]="true" loop playsinline preload="auto" disablepictureinpicture></video>
+    <video #vid src="/banner.mp4?v=3" poster="/banner-poster.jpg?v=3" [muted]="true" autoplay loop playsinline preload="auto" disablepictureinpicture></video>
   </section>
 
   <section id="metodo" class="sec">
@@ -66,8 +66,14 @@ export class LandingComponent implements AfterViewInit {
   ngAfterViewInit() {
     const v = this.vid.nativeElement;
     v.muted = true; v.defaultMuted = true;
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    v.play().catch(() => { /* si el navegador lo bloquea, queda el poster */ });
+    const arrancar = () => v.play().then(() => true, () => false);
+    arrancar().then(ok => {
+      if (ok) return;
+      // Si el navegador bloqueo el autoplay (ahorro de energia, etc.), reintenta al primer gesto.
+      const evs = ['pointerdown', 'touchstart', 'keydown', 'scroll'];
+      const reintento = () => { evs.forEach(e => removeEventListener(e, reintento)); arrancar(); };
+      evs.forEach(e => addEventListener(e, reintento, { passive: true }));
+    });
   }
 
   // Al bajar se oculta el navbar; al subir vuelve a aparecer.
