@@ -1,100 +1,95 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { DonutComponent } from '../core/graficos';
+import { FASES, INDICADORES, PLANES } from '../core/contenido';
+import { calcular, cop, pctGasto, semaforo } from '../core/metricas';
 
-// BORRADOR: textos, nombres de planes y precios son de ejemplo. Ajustalos aqui.
+type K = 'ingreso' | 'gasto' | 'deuda' | 'ahorro';
+
 @Component({
-  selector: 'app-landing',
-  standalone: true,
-  imports: [RouterLink],
+  selector: 'app-landing', standalone: true, imports: [RouterLink, FormsModule, DonutComponent],
   styleUrl: './landing.component.css',
   template: `
-  <header class="nav">
+  <header class="nav glass">
     <strong class="logo">Financer <span>KSD</span></strong>
-    <nav>
-      <a href="#metodologia">Metodología</a>
-      <a href="#planes">Planes</a>
-      <a routerLink="/login">Ingresar</a>
-      <a routerLink="/registro" class="btn">Empezar</a>
-    </nav>
+    <nav><a href="#calculadora">Calculadora</a><a href="#metodo">Método</a><a href="#planes">Planes</a>
+      <a routerLink="/login">Ingresar</a><a routerLink="/registro" class="btn">Empezar</a></nav>
   </header>
 
   <section class="hero">
-    <h1>Ordena tus finanzas con un plan hecho para ti</h1>
-    <p>Un asesor revisa tu situación real, te arma metas concretas y te acompaña hasta que veas tu progreso en números.</p>
+    <span class="pill">Asesoría financiera personal</span>
+    <h1>Tus finanzas, <em>claras</em> y con un plan que sí se mide</h1>
+    <p>Un asesor analiza tu situación real, define metas con fecha y te acompaña hasta que veas tu mejora en números.</p>
     <a routerLink="/registro" class="btn">Quiero mi diagnóstico</a>
-    <a href="#metodologia" class="btn sec">Ver cómo funciona</a>
+    <a href="#calculadora" class="btn sec">Probar la calculadora</a>
   </section>
 
-  <section id="metodologia" class="seccion">
-    <h2>Nuestra metodología en 4 pasos</h2>
-    <div class="pasos">
-      @for (p of pasos; track p.n) {
-        <div class="paso">
-          <div class="num">{{ p.n }}</div>
-          <h3>{{ p.titulo }}</h3>
-          <p>{{ p.texto }}</p>
+  <section id="calculadora" class="sec">
+    <h2>Calcula tu diagnóstico en 10 segundos</h2>
+    <p class="sub">Escribe tus cifras mensuales y mira tus tres indicadores al instante. No guardamos nada.</p>
+    <div class="calc glass">
+      <div class="campos">
+        @for (c of campos; track c.k) {
+          <label>{{ c.t }}<input type="number" min="0" [(ngModel)]="v[c.k]" /></label>
+        }
+      </div>
+      <div class="res">
+        <div class="don">
+          <app-donut [gasto]="gastoPct" />
+          <small><i class="d1"></i>Gastos {{ gastoPct.toFixed(0) }}% &nbsp; <i class="d2"></i>Libre</small>
         </div>
-      }
+        <div class="tarj">
+          @for (t of tarjetas; track t.nombre) {
+            <div class="t" [class]="'t ' + t.color"><small>{{ t.nombre }}</small><b>{{ t.valor }}</b><span>{{ t.ayuda }}</span></div>
+          }
+        </div>
+      </div>
+      <p class="libre">Te quedan libres cada mes: <b>{{ cop(m.libre) }}</b></p>
     </div>
   </section>
 
-  <section class="seccion alt">
-    <h2>Medimos lo que importa</h2>
-    <div class="metricas">
-      @for (m of metricas; track m.nombre) {
-        <div class="metrica">
-          <div class="valor">{{ m.valor }}</div>
-          <h3>{{ m.nombre }}</h3>
-          <p>{{ m.texto }}</p>
-        </div>
+  <section id="metodo" class="sec">
+    <h2>El método Financer KSD</h2>
+    <p class="sub">Cinco fases, un orden lógico y resultados que se comparan en el tiempo.</p>
+    <div class="linea">
+      @for (f of fases; track f.n) {
+        <div class="fase glass"><div class="num">{{ f.n }}</div><div><h3>{{ f.t }}</h3><p>{{ f.d }}</p></div></div>
       }
     </div>
-
-    <h3 class="sub">Así se ve tu mejora en el tiempo (ejemplo)</h3>
-    <svg viewBox="0 0 400 170" class="grafica" role="img" aria-label="Gráfica de ejemplo: la tasa de ahorro sube y la deuda baja">
-      <g stroke="#e5e7eb"><line x1="30" y1="20" x2="390" y2="20"/><line x1="30" y1="70" x2="390" y2="70"/><line x1="30" y1="120" x2="390" y2="120"/><line x1="30" y1="150" x2="390" y2="150"/></g>
-      <polyline fill="none" stroke="#0f766e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="40,135 110,115 180,95 250,70 320,45 380,28"/>
-      <polyline fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="40,30 110,45 180,70 250,95 320,115 380,132"/>
-      <g font-size="11" fill="#6b7280" text-anchor="middle"><text x="40" y="165">Mes 1</text><text x="180" y="165">Mes 3</text><text x="320" y="165">Mes 5</text></g>
-    </svg>
-    <p class="leyenda"><span class="dot v"></span> Ahorro sube &nbsp; <span class="dot d"></span> Deuda baja</p>
+    <h3 class="sub2">Los tres indicadores que medimos</h3>
+    <div class="ind">
+      @for (i of indicadores; track i.n) {
+        <div class="glass i"><h4>{{ i.n }}</h4><code>{{ i.f }}</code>
+          <p><span class="ok">Meta: {{ i.meta }}</span><span class="mal">Alerta: {{ i.alerta }}</span></p></div>
+      }
+    </div>
+    <small class="nota">Umbrales de referencia en finanzas personales. Información educativa; no es asesoría de inversión regulada.</small>
   </section>
 
-  <section id="planes" class="seccion">
-    <h2>Planes (borrador)</h2>
+  <section id="planes" class="sec">
+    <h2>Planes</h2>
     <div class="planes">
-      @for (pl of planes; track pl.nombre) {
-        <div class="plan" [class.dest]="pl.destacado">
-          <h3>{{ pl.nombre }}</h3>
-          <div class="precio">{{ pl.precio }}</div>
-          <ul>@for (i of pl.incluye; track i) { <li>{{ i }}</li> }</ul>
-          <a routerLink="/registro" class="btn" [class.sec]="!pl.destacado">Elegir</a>
+      @for (p of planes; track p.nombre) {
+        <div class="plan glass" [class.dest]="p.destacado">
+          @if (p.destacado) { <span class="pill">Recomendado</span> }
+          <h3>{{ p.nombre }}</h3><div class="precio">{{ p.precio ?? 'Por definir' }}</div>
+          <ul>@for (i of p.incluye; track i) { <li>{{ i }}</li> }</ul>
+          <a routerLink="/registro" class="btn" [class.sec]="!p.destacado">Elegir</a>
         </div>
       }
     </div>
   </section>
-
-  <footer>© 2026 Financer KSD · Asesoría financiera personal</footer>
-  `,
+  <footer>© 2026 Financer KSD</footer>`,
 })
 export class LandingComponent {
-  pasos = [
-    { n: 1, titulo: 'Diagnóstico', texto: 'Revisamos tus ingresos, gastos, deudas y ahorro para ver dónde estás hoy.' },
-    { n: 2, titulo: 'Plan personalizado', texto: 'Tu asesor define metas claras con fecha: fondo de emergencia, reducir deudas, bajar gastos.' },
-    { n: 3, titulo: 'Acompañamiento', texto: 'Das seguimiento, marcas avances y tu asesor ajusta el plan contigo.' },
-    { n: 4, titulo: 'Progreso medible', texto: 'Nuevos diagnósticos con el tiempo muestran en gráficas cuánto has mejorado.' },
+  fases = FASES; indicadores = INDICADORES; planes = PLANES; cop = cop;
+  v: Record<K, number> = { ingreso: 4000000, gasto: 3000000, deuda: 12000000, ahorro: 6000000 };
+  campos: { k: K; t: string }[] = [
+    { k: 'ingreso', t: 'Ingreso mensual' }, { k: 'gasto', t: 'Gasto mensual' },
+    { k: 'deuda', t: 'Deuda total' }, { k: 'ahorro', t: 'Ahorro actual' },
   ];
-  metricas = [
-    { valor: '%', nombre: 'Tasa de ahorro', texto: 'Qué parte de tu ingreso logras guardar cada mes.' },
-    { valor: '÷', nombre: 'Deuda / ingreso', texto: 'Cuánto pesa tu deuda frente a lo que ganas al año. Sobre 36% es zona de alerta.' },
-    { valor: 'm', nombre: 'Fondo de emergencia', texto: 'Cuántos meses de gastos puedes cubrir con tu ahorro.' },
-  ];
-  planes = [
-    { nombre: 'Esencial', precio: 'Por definir', destacado: false,
-      incluye: ['Diagnóstico financiero inicial', 'Plan de mejora con metas', 'Panel de progreso'] },
-    { nombre: 'Acompañamiento', precio: 'Por definir', destacado: true,
-      incluye: ['Todo lo del plan Esencial', 'Seguimiento periódico con tu asesor', 'Ajustes al plan', 'Nuevos diagnósticos para medir avance'] },
-    { nombre: 'Integral', precio: 'Por definir', destacado: false,
-      incluye: ['Todo lo del plan Acompañamiento', 'Estrategia de deudas', 'Metas de ahorro e inversión'] },
-  ];
+  get m() { return calcular(this.v); }
+  get tarjetas() { return semaforo(this.m); }
+  get gastoPct() { return pctGasto(this.v); }
 }
