@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FASES, INDICADORES, PLANES } from '../core/contenido';
 
@@ -20,7 +20,7 @@ import { FASES, INDICADORES, PLANES } from '../core/contenido';
   </section>
 
   <section class="video-banda" aria-label="Video: tus finanzas suben y bajan, con un plan tú decides hacia dónde">
-    <video src="/banner.mp4" poster="/banner-poster.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video>
+    <video #vid src="/banner.mp4" poster="/banner-poster.jpg" [muted]="true" loop playsinline preload="auto" disablepictureinpicture></video>
   </section>
 
   <section id="metodo" class="sec">
@@ -56,9 +56,19 @@ import { FASES, INDICADORES, PLANES } from '../core/contenido';
   </section>
   <footer>© 2026 Financer KSD</footer>`,
 })
-export class LandingComponent {
+export class LandingComponent implements AfterViewInit {
   fases = FASES; indicadores = INDICADORES; planes = PLANES;
   oculto = false; private y = 0;
+  @ViewChild('vid', { static: true }) vid!: ElementRef<HTMLVideoElement>;
+
+  // Angular no aplica bien el atributo "muted" y Chrome bloquea el autoplay con sonido:
+  // se silencia por propiedad y se arranca por codigo.
+  ngAfterViewInit() {
+    const v = this.vid.nativeElement;
+    v.muted = true; v.defaultMuted = true;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    v.play().catch(() => { /* si el navegador lo bloquea, queda el poster */ });
+  }
 
   // Al bajar se oculta el navbar; al subir vuelve a aparecer.
   @HostListener('window:scroll') onScroll() {
