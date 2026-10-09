@@ -1,20 +1,15 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DonutComponent } from '../core/graficos';
+import { BannerComponent } from '../core/banner';
 import { FASES, INDICADORES, PLANES } from '../core/contenido';
-import { calcular, cop, pctGasto, semaforo } from '../core/metricas';
-
-type K = 'ingreso' | 'gasto' | 'deuda' | 'ahorro';
 
 @Component({
-  selector: 'app-landing', standalone: true, imports: [RouterLink, FormsModule, DonutComponent],
+  selector: 'app-landing', standalone: true, imports: [RouterLink, BannerComponent],
   styleUrl: './landing.component.css',
   template: `
-  <header class="nav glass">
+  <header class="nav" [class.oculto]="oculto">
     <strong class="logo">Financer <span>KSD</span></strong>
-    <nav><a href="#calculadora">Calculadora</a><a href="#metodo">Método</a><a href="#planes">Planes</a>
-      <a routerLink="/login">Ingresar</a><a routerLink="/registro" class="btn">Empezar</a></nav>
+    <nav><a routerLink="/login" class="btn sec">Iniciar Sesion</a><a routerLink="/registro" class="btn">Registrame</a></nav>
   </header>
 
   <section class="hero">
@@ -22,32 +17,13 @@ type K = 'ingreso' | 'gasto' | 'deuda' | 'ahorro';
     <h1>Tus finanzas, <em>claras</em> y con un plan que sí se mide</h1>
     <p>Un asesor analiza tu situación real, define metas con fecha y te acompaña hasta que veas tu mejora en números.</p>
     <a routerLink="/registro" class="btn">Quiero mi diagnóstico</a>
-    <a href="#calculadora" class="btn sec">Probar la calculadora</a>
+    <a href="#metodo" class="btn sec">Ver cómo funciona</a>
   </section>
 
-  <section id="calculadora" class="sec">
-    <h2>Calcula tu diagnóstico en 10 segundos</h2>
-    <p class="sub">Escribe tus cifras mensuales y mira tus tres indicadores al instante. No guardamos nada.</p>
-    <div class="calc glass">
-      <div class="campos">
-        @for (c of campos; track c.k) {
-          <label>{{ c.t }}<input type="number" min="0" [(ngModel)]="v[c.k]" /></label>
-        }
-      </div>
-      <div class="res">
-        <div class="don">
-          <app-donut [gasto]="gastoPct" />
-          <small><i class="d1"></i>Gastos {{ gastoPct.toFixed(0) }}% &nbsp; <i class="d2"></i>Libre</small>
-        </div>
-        <div class="tarj">
-          @for (t of tarjetas; track t.nombre) {
-            <div class="t" [class]="'t ' + t.color"><small>{{ t.nombre }}</small><b>{{ t.valor }}</b><span>{{ t.ayuda }}</span></div>
-          }
-        </div>
-      </div>
-      <p class="libre">Te quedan libres cada mes: <b>{{ cop(m.libre) }}</b></p>
-    </div>
-  </section>
+  <app-banner>
+    <h2 class="bt">Tus finanzas suben y bajan.<br>Con un plan, tú decides hacia dónde.</h2>
+    <p class="bs">Medimos tu avance diagnóstico tras diagnóstico.</p>
+  </app-banner>
 
   <section id="metodo" class="sec">
     <h2>El método Financer KSD</h2>
@@ -83,13 +59,14 @@ type K = 'ingreso' | 'gasto' | 'deuda' | 'ahorro';
   <footer>© 2026 Financer KSD</footer>`,
 })
 export class LandingComponent {
-  fases = FASES; indicadores = INDICADORES; planes = PLANES; cop = cop;
-  v: Record<K, number> = { ingreso: 4000000, gasto: 3000000, deuda: 12000000, ahorro: 6000000 };
-  campos: { k: K; t: string }[] = [
-    { k: 'ingreso', t: 'Ingreso mensual' }, { k: 'gasto', t: 'Gasto mensual' },
-    { k: 'deuda', t: 'Deuda total' }, { k: 'ahorro', t: 'Ahorro actual' },
-  ];
-  get m() { return calcular(this.v); }
-  get tarjetas() { return semaforo(this.m); }
-  get gastoPct() { return pctGasto(this.v); }
+  fases = FASES; indicadores = INDICADORES; planes = PLANES;
+  oculto = false; private y = 0;
+
+  // Al bajar se oculta el navbar; al subir vuelve a aparecer.
+  @HostListener('window:scroll') onScroll() {
+    const y = window.scrollY, dif = y - this.y;
+    if (Math.abs(dif) < 6) return;          // ignora temblores minimos
+    this.oculto = dif > 0 && y > 90;
+    this.y = y;
+  }
 }

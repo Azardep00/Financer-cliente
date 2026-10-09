@@ -12,7 +12,7 @@ i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin
 .cifras { padding: 1.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; } .cifras b { font-size: 1.05rem; }
 .plan { padding: 1.5rem; } .plan h3 { margin: 0; } .desc { color: var(--suave); }
 .barra { height: 12px; background: rgba(255,255,255,.1); border-radius: 99px; overflow: hidden; margin: 1rem 0 .4rem; }
-.barra div { height: 100%; background: linear-gradient(90deg, #e11d2e, #9f1220); box-shadow: 0 0 14px #e11d2e; transition: width .4s; }
+.barra div { height: 100%; background: linear-gradient(90deg, #7464c8, #4a3d99); box-shadow: 0 0 14px #7464c8; transition: width .4s; }
 .meta { display: flex; gap: .7rem; align-items: center; padding: .8rem 0; border-top: 1px solid var(--borde); cursor: pointer; } .meta:first-of-type { margin-top: 1rem; }
 .meta input { width: 20px; height: 20px; accent-color: var(--rojo); } .txt { flex: 1; } .meta.hecha .txt { text-decoration: line-through; color: var(--suave); }
 .meta em { font-size: .8rem; color: var(--suave); font-style: normal; } .meta em.venc { color: #fb7185; font-weight: 700; }
