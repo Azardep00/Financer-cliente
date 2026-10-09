@@ -1,10 +1,9 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BannerComponent } from '../core/banner';
 import { FASES, INDICADORES, PLANES } from '../core/contenido';
 
 @Component({
-  selector: 'app-landing', standalone: true, imports: [RouterLink, BannerComponent],
+  selector: 'app-landing', standalone: true, imports: [RouterLink],
   styleUrl: './landing.component.css',
   template: `
   <header class="nav" [class.oculto]="oculto">
@@ -20,10 +19,9 @@ import { FASES, INDICADORES, PLANES } from '../core/contenido';
     <a href="#metodo" class="btn sec">Ver cómo funciona</a>
   </section>
 
-  <app-banner>
-    <h2 class="bt">Tus finanzas suben y bajan.<br>Con un plan, tú decides hacia dónde.</h2>
-    <p class="bs">Medimos tu avance diagnóstico tras diagnóstico.</p>
-  </app-banner>
+  <section class="video-banda" aria-label="Video: tus finanzas suben y bajan, con un plan tú decides hacia dónde">
+    <video src="/banner.mp4" poster="/banner-poster.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video>
+  </section>
 
   <section id="metodo" class="sec">
     <h2>El método Financer KSD</h2>
