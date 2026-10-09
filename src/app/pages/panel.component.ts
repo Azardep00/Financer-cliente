@@ -104,8 +104,8 @@ export class PanelComponent implements OnInit {
     if (h.length < 2) return [];
     const pct = (n: number) => n.toFixed(1) + '%';
     const def = [
-      { titulo: 'Tasa de ahorro', vals: h.map(p => p.tasaAhorro), sube: true, color: '#ff4fb8', fmt: pct },
-      { titulo: 'Deuda / ingreso anual', vals: h.map(p => p.relacionDeudaIngreso), sube: false, color: '#c4b5fd', fmt: pct },
+      { titulo: 'Tasa de ahorro', vals: h.map(p => p.tasaAhorro), sube: true, color: '#e11d2e', fmt: pct },
+      { titulo: 'Deuda / ingreso anual', vals: h.map(p => p.relacionDeudaIngreso), sube: false, color: '#d4d4d8', fmt: pct },
       { titulo: 'Fondo de emergencia', vals: h.map(p => p.mesesFondoEmergencia), sube: true, color: '#34d399', fmt: (n: number) => n.toFixed(1) + ' meses' },
       { titulo: 'Ahorro acumulado', vals: h.map(p => p.ahorroActual), sube: true, color: '#fbbf24', fmt: cop },
     ];

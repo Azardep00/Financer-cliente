@@ -3,8 +3,8 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-donut', standalone: true,
   template: `<svg viewBox="0 0 100 100" class="donut" role="img" aria-label="Distribución del ingreso">
-    <circle cx="50" cy="50" r="40" fill="none" stroke="#ff4fb8" stroke-width="12"/>
-    <circle cx="50" cy="50" r="40" fill="none" stroke="#c4b5fd" stroke-width="12" stroke-linecap="butt"
+    <circle cx="50" cy="50" r="40" fill="none" stroke="#e11d2e" stroke-width="12"/>
+    <circle cx="50" cy="50" r="40" fill="none" stroke="#d4d4d8" stroke-width="12" stroke-linecap="butt"
       [attr.stroke-dasharray]="gasto * 2.513 + ' 251.3'" transform="rotate(-90 50 50)"/>
     <text x="50" y="52" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">{{ (100 - gasto).toFixed(0) }}%</text>
     <text x="50" y="65" text-anchor="middle" fill="#b9a6c4" font-size="7">libre</text></svg>`,
@@ -29,7 +29,7 @@ let uid = 0;
 export class LineaComponent {
   @Input() vals: number[] = [];
   @Input() fechas: string[] = [];
-  @Input() color = '#ff4fb8';
+  @Input() color = '#e11d2e';
   @Input() fmt: (n: number) => string = n => n.toFixed(1);
   id = 'g' + uid++;
 
