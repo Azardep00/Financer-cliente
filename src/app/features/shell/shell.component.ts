@@ -12,13 +12,14 @@ const MENU: Record<'Cliente' | 'Asesor', ItemMenu[]> = {
     { ruta: '/cliente/resumen', etiqueta: 'Resumen', icono: 'resumen' },
     { ruta: '/cliente/plan', etiqueta: 'Plan del mes', icono: 'plan' },
     { ruta: '/cliente/historial', etiqueta: 'Historial de planes', icono: 'historial' },
+    { ruta: '/cliente/cuenta', etiqueta: 'Mi cuenta', icono: 'cuenta' },
   ],
   Asesor: [
     { ruta: '/asesor/clientes', etiqueta: 'Clientes', icono: 'clientes' },
     { ruta: '/asesor/asesores', etiqueta: 'Asesores', icono: 'asesores' },
+    { ruta: '/asesor/cuenta', etiqueta: 'Mi cuenta', icono: 'cuenta' },
   ],
 };
-
 /** Marco de las pantallas con sesión: barra lateral azul tinta + contenido claro. */
 @Component({
   selector: 'app-shell',
