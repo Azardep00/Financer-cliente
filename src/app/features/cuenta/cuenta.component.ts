@@ -15,7 +15,8 @@ import { AuthService } from '../../core/auth.service';
       <section class="card" aria-labelledby="t-cta">
         <h2 id="t-cta" class="card-titulo">Perfil</h2>
         @if (cargando()) { <div class="cargando" role="status"><span class="giro"></span> Cargando…</div> }
-        @else if (s(); as u) {
+        @else if (s()) {
+          @let u = s()!;
           <dl class="datos">
             <dt>Nombre</dt><dd>{{ u.nombre }} {{ u.apellido }}</dd>
             <dt>Correo</dt><dd>{{ u.correo }}</dd>
