@@ -86,7 +86,8 @@ export const ETIQ_ALERTA: Record<TipoAlerta, string> = {
         <div class="cargando" role="status"><span class="giro"></span> Cargando clientes…</div>
       } @else if (fallo()) {
         <div class="aviso aviso-mal">No se pudo cargar el panel. <button type="button" class="btn btn-secundario btn-sm" (click)="cargar()">Reintentar</button></div>
-      } @else if (datos(); as d) {
+      } @else if (datos()) {
+        @let d = datos()!;
         @if (d.clientes.length === 0) {
           <div class="vacio">
             <strong>{{ hayFiltros() ? 'Ningún cliente coincide con los filtros' : 'Aún no hay clientes registrados' }}</strong>

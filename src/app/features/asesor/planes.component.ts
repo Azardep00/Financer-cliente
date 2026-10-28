@@ -176,7 +176,7 @@ type Panel = 'ninguno' | 'cerrar' | 'cancelar';
                   </ul>
                 </div>
                 @if (agregandoBorrador()) {
-                  <div class="ancho-total"><app-meta-form etiqueta="Añadir al plan" [ultimo]="ultimo" (guardar)="añadirBorrador($event)" (cancelar)="agregandoBorrador.set(false)" /></div>
+                  <div class="ancho-total"><app-meta-form etiqueta="Añadir al plan" [ultimo]="ultimo" (guardar)="anadirBorrador($event)" (cancelar)="agregandoBorrador.set(false)" /></div>
                 } @else {
                   <div class="ancho-total"><button type="button" class="btn btn-secundario btn-sm" (click)="agregandoBorrador.set(true)">+ Añadir meta</button></div>
                 }
@@ -290,7 +290,7 @@ export class PlanesAsesorComponent implements OnInit {
     this.creando.set(true); this.intento.set(false); this.errorForm.set(''); this.borrador.set([]);
     this.nuevo = { titulo: '', descripcion: '', periodo: hoyIso().slice(0, 7) };
   }
-  añadirBorrador(m: MetaRequest) { this.borrador.update(l => [...l, m]); this.agregandoBorrador.set(false); }
+  anadirBorrador(m: MetaRequest) { this.borrador.update(l => [...l, m]); this.agregandoBorrador.set(false); }
   quitarBorrador(i: number) { this.borrador.update(l => l.filter((_, k) => k !== i)); }
 
   crear() {
