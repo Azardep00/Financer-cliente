@@ -1,0 +1,5 @@
+form { display: grid; gap: 1rem; }
+.con-boton { position: relative; }
+.con-boton .entrada { padding-right: 5.2rem; }
+.con-boton .btn { position: absolute; right: .3rem; top: 50%; transform: translateY(-50%); }
+.pie { margin-top: 1.25rem; font-size: .875rem; color: var(--suave); }
