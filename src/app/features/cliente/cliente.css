@@ -1,0 +1,14 @@
+.bloque { margin-top: 1rem; }
+.sec { font-size: 1.05rem; margin: 1.5rem 0 .75rem; }
+.nota { margin-top: .75rem; font-size: .875rem; }
+.ind-pie { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-top: .6rem; font-size: .8125rem; flex-wrap: wrap; }
+.cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin: 0; }
+.cifras dt { font-size: .8125rem; color: var(--suave); }
+.cifras dd { margin: .15rem 0 0; font-size: 1.1rem; font-weight: 600; }
+.barra { height: 8px; background: var(--fondo); border: 1px solid var(--borde); border-radius: 4px; overflow: hidden; }
+.barra.grande { height: 12px; margin: .75rem 0 .5rem; }
+.barra span { display: block; height: 100%; background: var(--primario); }
+.encabezado-plan { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.avance { text-align: right; }
+tr.detalle td { background: #f8fafc; padding: 1rem; }
+.nota-cierre { margin: .5rem 0 .75rem; }

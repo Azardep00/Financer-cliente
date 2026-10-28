@@ -1,0 +1,17 @@
+.pagina.ancha { max-width: 1280px; }
+.volver { display: inline-block; margin-bottom: .75rem; font-size: .875rem; }
+.sep { margin-top: 1rem; }
+.sec { font-size: 1.05rem; margin: 0 0 .5rem; }
+.peq { font-size: .8125rem; }
+.en-linea { display: flex; gap: .5rem; align-items: center; }
+.en-linea .entrada { flex: 1; min-width: 0; }
+.inds { list-style: none; margin: 0 0 .75rem; padding: 0; display: grid; gap: .6rem; }
+.inds li { display: grid; grid-template-columns: 1fr auto auto; gap: .75rem; align-items: center; }
+.inds small { display: block; font-size: .75rem; }
+.inds b { font-size: 1.05rem; }
+.form-diag { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.vivo { grid-column: 2; grid-row: 1 / span 3; background: var(--fondo); border: 1px solid var(--borde); border-radius: var(--radio); padding: 1rem; display: grid; gap: .5rem; align-content: start; }
+.vivo-fila { display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-size: .875rem; }
+.vivo-fila span:first-child { flex: 1; }
+.ancho-total { grid-column: 1 / -1; }
+@media (max-width: 780px) { .form-diag { grid-template-columns: minmax(0, 1fr); } .vivo { grid-column: 1; grid-row: auto; } }

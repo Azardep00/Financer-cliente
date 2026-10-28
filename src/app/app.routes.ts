@@ -19,12 +19,10 @@ export const routes: Routes = [
     canActivate: [rolGuard('Cliente')],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'resumen' },
-      { path: 'resumen', loadComponent: () => import('./features/shell/proximamente.component').then(m => m.ProximamenteComponent),
-        data: { titulo: 'Resumen financiero', descripcion: 'Tus indicadores, la evolución de tus diagnósticos y tu asesor.', checkpoint: 'F3' } },
-      { path: 'plan', loadComponent: () => import('./features/shell/proximamente.component').then(m => m.ProximamenteComponent),
-        data: { titulo: 'Plan del mes', descripcion: 'Tus metas del mes, con montos y avance.', checkpoint: 'F3' } },
-      { path: 'historial', loadComponent: () => import('./features/shell/proximamente.component').then(m => m.ProximamenteComponent),
-        data: { titulo: 'Historial de planes', descripcion: 'Planes de meses anteriores, en solo lectura.', checkpoint: 'F3' } },
+      { path: 'resumen', loadComponent: () => import('./features/cliente/resumen.component').then(m => m.ResumenClienteComponent) },
+      { path: 'plan', loadComponent: () => import('./features/cliente/plan.component').then(m => m.PlanClienteComponent) },
+      { path: 'historial', loadComponent: () => import('./features/cliente/historial.component').then(m => m.HistorialClienteComponent) },
+      { path: 'cuenta', loadComponent: () => import('./features/cuenta/cuenta.component').then(m => m.CuentaComponent) },
     ],
   },
   {
@@ -33,12 +31,10 @@ export const routes: Routes = [
     canActivate: [rolGuard('Asesor')],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'clientes' },
-      { path: 'clientes', loadComponent: () => import('./features/shell/proximamente.component').then(m => m.ProximamenteComponent),
-        data: { titulo: 'Clientes', descripcion: 'Panel con resumen, alertas, búsqueda y filtros.', checkpoint: 'F4' } },
-      { path: 'clientes/:id', loadComponent: () => import('./features/shell/proximamente.component').then(m => m.ProximamenteComponent),
-        data: { titulo: 'Ficha del cliente', descripcion: 'Datos, diagnósticos, planes, metas y notas.', checkpoint: 'F5 y F6' } },
-      { path: 'asesores', loadComponent: () => import('./features/shell/proximamente.component').then(m => m.ProximamenteComponent),
-        data: { titulo: 'Asesores', descripcion: 'Equipo de asesores y alta de nuevos asesores.', checkpoint: 'F7' } },
+      { path: 'clientes', loadComponent: () => import('./features/asesor/clientes.component').then(m => m.AsesorClientesComponent) },
+      { path: 'clientes/:id', loadComponent: () => import('./features/asesor/ficha.component').then(m => m.AsesorFichaComponent) },
+      { path: 'asesores', loadComponent: () => import('./features/asesor/asesores.component').then(m => m.AsesoresComponent) },
+      { path: 'cuenta', loadComponent: () => import('./features/cuenta/cuenta.component').then(m => m.CuentaComponent) },
     ],
   },
 
